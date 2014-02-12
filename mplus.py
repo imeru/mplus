@@ -1,9 +1,15 @@
 from multiprocessing import Pool, cpu_count
+from subprocess import call
+import os
 
-def f(x):
-    return x*x
+def run_ls(path):
+    current_dir = os.getcwd()
+    os.chdir(path)
+    call(["energyplus"])
+    os.chdir(current_dir)
 
 if __name__ == '__main__':
     CORES = cpu_count()
+    pathes = ["data", "data2"]
     p = Pool(CORES)
-    print p.map(f, [1,2,3,100,200,300,400,500])
+    print p.map(run_ls, pathes)
