@@ -1,0 +1,11 @@
+! ***WINDOW/DOOR CONSTRUCTIONS AND MATERIALS***
+
+  Construction,
+    Window Non-res Fixed,    !- Name
+    NonRes Fixed Assembly Window;  !- Outside Layer
+
+  WindowMaterial:SimpleGlazingSystem,
+    NonRes Fixed Assembly Window,  !- Name
+    3.23646,                 !- U-Factor {W/m2-K}
+    0.39,                    !- Solar Heat Gain Coefficient
+    ;                        !- Visible Transmittance
