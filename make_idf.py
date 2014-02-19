@@ -45,3 +45,5 @@ if __name__ == '__main__':
         os.makedirs(path_to_write)
 	copy_files(eplus_basic_folder, path_to_write)
 	write_idf(template_idf_path, output_path, lhs_value)
+    
+    run_eplus_multi(pathes)
