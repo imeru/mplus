@@ -1,8 +1,8 @@
+import sys
+import os
+import shutil
 import csv
 
-MARK_WINDOWS = "@@WINDOWS@@"
-lhs_10_path = "sample_data/lhs_10.csv"
-template_idf_path = "sample_data/template.idf"
 
 def get_lhs_set(lhs_file_path):
     with open(lhs_10_path, "r") as f:
@@ -12,6 +12,7 @@ def get_lhs_set(lhs_file_path):
 
 
 def write_idf(template_path, output_path, lhs_value):
+    MARK_WINDOWS = "@@WINDOWS@@"
     origin = open(template_path, 'r')
     new = open(output_path, 'w')
     for line in origin:
@@ -20,7 +21,16 @@ def write_idf(template_path, output_path, lhs_value):
     origin.close()
     new.close()
 
+lhs_10_path = "sample_data/lhs_10.csv"
+template_idf_path = "sample_data/template.idf"
+output_folder = sys.argv[1]
 lhs_set = get_lhs_set(lhs_10_path)
+
+if os.path.exists(output_folder):
+    shutil.rmtree(output_folder)
+
 for index, lhs_value in enumerate(lhs_set[0]):
-    output_path = "lhs_" + str(index) + ".idf"
+    path_to_write = output_folder + "/" + str(index)
+    output_path = path_to_write + "/" + "lhs_" + str(index) + ".idf"
+    os.makedirs(path_to_write)
     write_idf(template_idf_path, output_path, lhs_value)
