@@ -11,7 +11,6 @@ def get_lhs_set(lhs_file_path):
         lhs_set = [value for value in csv_contents]
     return lhs_set
 
-
 def write_idf(template_path, output_path, lhs_value):
     MARK_WINDOWS = "@@WINDOWS@@"
     origin = open(template_path, 'r')
