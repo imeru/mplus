@@ -35,7 +35,7 @@ if __name__ == '__main__':
     lhs_set = get_lhs_set(lhs_10_path)
 
     if os.path.exists(output_folder):
-	shutil.rmtree(output_folder)
+        shutil.rmtree(output_folder)
 
     pathes = []
     for index, lhs_value in enumerate(lhs_set[0]):
@@ -43,7 +43,6 @@ if __name__ == '__main__':
         pathes.append(path_to_write)
         output_path = path_to_write + "/" + "in.idf"
         os.makedirs(path_to_write)
-	copy_files(eplus_basic_folder, path_to_write)
-	write_idf(template_idf_path, output_path, lhs_value)
-    
+        copy_files(eplus_basic_folder, path_to_write)
+        write_idf(template_idf_path, output_path, lhs_value)
     run_eplus_multi(pathes)
