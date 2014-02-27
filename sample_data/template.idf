@@ -233,7 +233,7 @@
     7,                       !- Calculation Frequency
     15000;                   !- Maximum Figures in Shadow Overlap Calculations
 
-  Timestep,6;
+  Timestep,2;
 
 ! WeatherFileName=USA_CO_Boulder_TMY2.epw
 
@@ -379,7 +379,7 @@
 
   WindowMaterial:SimpleGlazingSystem,
     NonRes Fixed Assembly Window,  !- Name
-    3.23646,                 !- U-Factor {W/m2-K}
+    @@WINDOWS@@,             !- U-Factor {W/m2-K}
     0.39,                    !- Solar Heat Gain Coefficient
     ;                        !- Visible Transmittance
 
