@@ -11,13 +11,36 @@ def get_lhs_set(lhs_file_path):
         lhs_set = [value for value in csv_contents]
     return lhs_set
 
-def write_idf(template_path, output_path, lhs_value):
-    MARK_WINDOWS = "@@WINDOWS@@"
+def replace_markup(line, markup_value_pairs):
+    for markup in markup_value_pairs.keys():
+        line = line.replace(markup, str(markup_value_pairs[markup]))
+    return line
+
+def generate_markup_values(markup_range_pairs, count):
+    markup_values_pairs = {}
+    for key in markup_range_pairs:
+        markup = key
+        ranges = markup_range_pairs[key]
+        lhs_values = lhs(ranges[0], ranges[1], count)
+        markup_values_pairs[markup] = lhs_values
+    return markup_values_pairs
+
+def generate_markup_value_pairs(markup_range_pairs, count):
+    markup_values_pairs = generate_markup_values(markup_range_pairs, count)
+    markup_value_pairs = []
+    for index in range(count):
+        markup_value_pair = {}
+        for key in markup_range_pairs:
+            markup_value_pair[key] = markup_values_pairs[key].pop()
+        markup_value_pairs.append(markup_value_pair)
+    return markup_value_pairs
+
+def write_idf(template_path, output_path, markup_value_pairs):
     origin = open(template_path, 'r')
     new = open(output_path, 'w')
     for line in origin:
-         line = line.replace(MARK_WINDOWS, str(lhs_value))
-         new.write(line)
+        replaced_line = replace_markup(line, markup_value_pairs)
+        new.write(replaced_line)
     origin.close()
     new.close()
 
@@ -31,17 +54,19 @@ if __name__ == '__main__':
     template_idf_path = "sample_data/template.idf"
     eplus_basic_folder = "sample_data/eplus_basic_files"
     output_folder = sys.argv[1]
-    lhs_set = lhs(3.2, 0.2, 10)
-
     if os.path.exists(output_folder):
         shutil.rmtree(output_folder)
-
+    markup_range_pairs = {"WALL": [1, 0.1],
+                          "WINDOW": [3.2, 0.2],
+                          "EPD": [40, 5]}
+    count = 10
+    markup_value_pairs = generate_markup_value_pairs(markup_range_pairs, count)
     pathes = []
-    for index, lhs_value in enumerate(lhs_set):
+    for index, markup_value_pair in enumerate(markup_value_pairs):
         path_to_write = output_folder + "/" + str(index)
         pathes.append(path_to_write)
         output_path = path_to_write + "/" + "in.idf"
         os.makedirs(path_to_write)
         copy_files(eplus_basic_folder, path_to_write)
-        write_idf(template_idf_path, output_path, lhs_value)
+        write_idf(template_idf_path, output_path, markup_value_pair)
     run_eplus_multi(pathes)
