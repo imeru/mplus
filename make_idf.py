@@ -51,14 +51,14 @@ def copy_files(orig, dest):
         shutil.copy(file_path, dest)
 
 if __name__ == '__main__':
-    template_idf_path = "sample_data/template.idf"
+    template_idf_path = "sample_data/template1.idf"
     eplus_basic_folder = "sample_data/eplus_basic_files"
     output_folder = sys.argv[1]
     if os.path.exists(output_folder):
         shutil.rmtree(output_folder)
-    markup_range_pairs = {"WALL": [1, 0.1],
-                          "WINDOW": [3.2, 0.2],
-                          "EPD": [40, 5]}
+    markup_range_pairs = {"@@WALL@@": [0.09667, 0.02],
+                          "@@WINDOWS@@": [3.2, 0.2],
+                          "@@EPD@@": [40, 5]}
     count = 10
     markup_value_pairs = generate_markup_value_pairs(markup_range_pairs, count)
     pathes = []
