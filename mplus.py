@@ -7,6 +7,7 @@ def run_eplus(path):
     current_dir = os.getcwd()
     os.chdir(path)
     call(["EnergyPlus"])
+    call(["ReadVarsESO", "my.rvi"])
     os.chdir(current_dir)
 
 def run_eplus_multi(pathes):
