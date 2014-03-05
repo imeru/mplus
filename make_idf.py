@@ -42,3 +42,15 @@ def copy_files(orig, dest):
     for file_name in files:
         file_path = os.path.join(orig, file_name)
         shutil.copy(file_path, dest)
+
+def prepare_job_folders(output_folder, template_idf_path,
+                        eplus_basic_folder, markup_value_pairs):
+    pathes = []
+    for index, markup_value_pair in enumerate(markup_value_pairs):
+        path_to_write = output_folder + "/" + str(index)
+        pathes.append(path_to_write)
+        output_path = path_to_write + "/" + "in.idf"
+        os.makedirs(path_to_write)
+        copy_files(eplus_basic_folder, path_to_write)
+        write_idf(template_idf_path, output_path, markup_value_pair)
+    return pathes
