@@ -4,12 +4,6 @@ import shutil
 import csv
 from sampling import lhs
 
-def get_lhs_set(lhs_file_path):
-    with open(lhs_10_path, "r") as f:
-        csv_contents = csv.reader(f)
-        lhs_set = [value for value in csv_contents]
-    return lhs_set
-
 def replace_markup(line, markup_value_pairs):
     for markup in markup_value_pairs.keys():
         line = line.replace(markup, str(markup_value_pairs[markup]))

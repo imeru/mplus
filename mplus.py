@@ -14,6 +14,3 @@ def run_eplus_multi(pathes):
     p = Pool(cpu_count())
     result = p.map(run_eplus, pathes)
     return result
-
-def copy_folder(origin, destination):
-    shutil.copytree(origin, destination)
