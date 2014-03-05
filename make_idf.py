@@ -2,7 +2,6 @@ import sys
 import os
 import shutil
 import csv
-from mplus import run_eplus_multi
 from sampling import lhs
 
 def get_lhs_set(lhs_file_path):
@@ -49,24 +48,3 @@ def copy_files(orig, dest):
     for file_name in files:
         file_path = os.path.join(orig, file_name)
         shutil.copy(file_path, dest)
-
-if __name__ == '__main__':
-    template_idf_path = "sample_data/template1.idf"
-    eplus_basic_folder = "sample_data/eplus_basic_files"
-    output_folder = sys.argv[1]
-    if os.path.exists(output_folder):
-        shutil.rmtree(output_folder)
-    markup_range_pairs = {"@@WALL@@": [0.09667, 0.02],
-                          "@@WINDOWS@@": [3.2, 0.2],
-                          "@@EPD@@": [40, 5]}
-    count = 10
-    markup_value_pairs = generate_markup_value_pairs(markup_range_pairs, count)
-    pathes = []
-    for index, markup_value_pair in enumerate(markup_value_pairs):
-        path_to_write = output_folder + "/" + str(index)
-        pathes.append(path_to_write)
-        output_path = path_to_write + "/" + "in.idf"
-        os.makedirs(path_to_write)
-        copy_files(eplus_basic_folder, path_to_write)
-        write_idf(template_idf_path, output_path, markup_value_pair)
-    run_eplus_multi(pathes)
