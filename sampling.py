@@ -9,6 +9,3 @@ def lhs(mu, sigma, iteration):
         point = segMin + (random.normalvariate(mu,sigma) * segSize)
         lhs_values.append(point)
     return lhs_values
-
-if __name__ == '__main__':
-    print lhs(3.2, 0.2, 10)

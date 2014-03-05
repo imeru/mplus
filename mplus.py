@@ -17,12 +17,3 @@ def run_eplus_multi(pathes):
 
 def copy_folder(origin, destination):
     shutil.copytree(origin, destination)
-
-if __name__ == '__main__':
-    ORIGIN_DATA = "data"
-    pathes = []
-    for i in range(4):
-        destination = ORIGIN_DATA + "_"  + str(i)
-        copy_folder(ORIGIN_DATA, destination)
-	pathes.append(destination)
-    run_eplus_multi(pathes)
