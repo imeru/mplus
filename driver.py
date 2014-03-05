@@ -18,3 +18,20 @@ markup_value_pairs = generate_markup_value_pairs(markup_range_pairs, count)
 pathes = prepare_job_folders(output_folder, template_idf_path,
                              eplus_basic_folder, markup_value_pairs)
 run_eplus_multi(pathes)
+
+eplus_out_csv_pathes = []
+for root, dirs, files in os.walk(output_folder):
+    for file in files:
+        if file.endswith("eplusout.csv"):
+            eplus_out_csv_pathes.append(os.path.join(root, file))
+
+result_path = os.path.join(output_folder, "result")
+os.makedirs(result_path)
+dest_pathes = []
+for path in eplus_out_csv_pathes:
+    path = path.replace(output_folder + "/", '')
+    path = path.replace("/", "_")
+    path = os.path.join(result_path, path)
+    dest_pathes.append(path)
+for orig, dest in zip(eplus_out_csv_pathes, dest_pathes):
+    shutil.copyfile(orig, dest)
