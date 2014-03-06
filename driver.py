@@ -35,7 +35,7 @@ for root, dirs, files in os.walk(output_folder):
     for file in files:
         if file.endswith(eplusout_file_name):
             eplus_out_csv_pathes.append(os.path.join(root, file))
-
+eplus_out_csv_pathes = sorted(eplus_out_csv_pathes)
 result_path = os.path.join(output_folder, result_folder_name)
 os.makedirs(result_path)
 dest_pathes = []
@@ -65,3 +65,16 @@ csv_sum_file_path = os.path.join(result_path, csv_sum_file_name)
 with open(csv_sum_file_path, "wb") as file:
     for row in csv_sum:
         file.write("%s\n" % row)
+
+# generating csv file for markup value_pairs
+input_param_val_name = "input_parameters_values.csv"
+input_param_val_path = os.path.join(result_path, input_param_val_name)
+with open(input_param_val_path, "wb") as file:
+    out = csv.writer(file, delimiter='|', quoting=csv.QUOTE_NONE)
+    header = ["JOB_ID"]
+    header.extend(markup_value_pairs[0].keys())
+    out.writerow(header)
+    for index, item in enumerate(markup_value_pairs):
+        row = [index]
+        row.extend(item.values())
+        out.writerow(row)
