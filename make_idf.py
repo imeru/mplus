@@ -2,7 +2,7 @@ import sys
 import os
 import shutil
 import csv
-from sampling import lhs
+from sampling import Sampling
 
 def replace_markup(line, markup_value_pairs):
     for markup in markup_value_pairs.keys():
@@ -14,8 +14,9 @@ def generate_markup_values(markup_range_pairs, count):
     for key in markup_range_pairs:
         markup = key
         ranges = markup_range_pairs[key]
-        lhs_values = lhs(ranges[0], ranges[1], count)
-        markup_values_pairs[markup] = lhs_values
+        lhs_normal_sampling = Sampling('normal', 'lhs')
+        sampling_values = lhs_normal_sampling.generate(count, ranges)
+        markup_values_pairs[markup] = sampling_values
     return markup_values_pairs
 
 def generate_markup_value_pairs(markup_range_pairs, count):
