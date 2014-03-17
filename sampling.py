@@ -46,9 +46,9 @@ class Lhs(object):
 
     def _normal_generate(self):
         loc = self.kwargs['loc']
-        scales = self.kwargs['scales']
-        lhd = self._uniform_generate(n, samples)
-        lhd = norm(loc, scales=1).ppf(lhd)
+        scale = self.kwargs['scale']
+        lhd = self._uniform_generate()
+        lhd = norm(loc, scale).ppf(lhd)
         return lhd
 
     def _triang_generate(self):
@@ -58,6 +58,6 @@ class Lhs(object):
         loc = min
         scale = max - min
         c = (mod - min) / (max - min)
-        lhd = self._uniform_generate(n, samples)
+        lhd = self._uniform_generate()
         lhd = triang(c, loc, scale).ppf(lhd)
         return lhd

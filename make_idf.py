@@ -14,7 +14,9 @@ def generate_markup_values(markup_range_pairs, count):
     for key in markup_range_pairs:
         markup = key
         ranges = markup_range_pairs[key]
-        sampling_values = Lhs(sampling_dist='uniform', n=1, samples=10).generate()
+        loc = ranges[0]
+        scale = ranges[1]
+        sampling_values = Lhs(sampling_dist='normal', n=1, loc=loc, scale=scale, samples=10).generate()
         markup_values_pairs[markup] = sampling_values
     return markup_values_pairs
 

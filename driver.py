@@ -55,9 +55,11 @@ with open(dest_pathes[0]) as csv_file:
     csv_sum.extend(contents[0])
 
 for file in dest_pathes:
+    print "***", file
     with open(file) as csv_file:
         rows = csv.reader(csv_file, delimiter='|')
         contents = [row for row in rows]
+        print "***", type(contents), contents
         csv_sum.extend(contents[1])
 
 csv_sum_file_name = "csv_sum.csv"
